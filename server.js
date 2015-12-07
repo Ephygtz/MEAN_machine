@@ -38,6 +38,17 @@ app.get('/', function(request, response) {
 //get an instance of the router
 var adminRouter = express.Router();
 
+//Route Middleware(router.use())
+//route Middleware that will happen on every request
+adminRouter.use(function(request, response, next) {
+
+    //log each request to the console
+    console.log(request.method, request.url);
+
+    //continue doing what we were doing and go to the route
+    next();
+});
+
 //admin main page. The dashboard(http://localhost:8989/admin)
 adminRouter.get('/', function(request, response) {
     response.send('I am the dashboard!');
@@ -52,6 +63,12 @@ adminRouter.get('/users', function(request, response) {
 adminRouter.get('/posts', function(request, response) {
   response.send('I show all the posts');
 });
+
+//route with parameters(http://localhost:8989/admin/users/:name)
+adminRouter.get('/users/:name', function(request, response) {
+    response.send('Hello ' + request.params.name + '!');
+});
+
 
 //Apply the routes to our application
 app.use('/admin', adminRouter);
