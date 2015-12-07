@@ -33,6 +33,29 @@ app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
+//create routes for the admin section
+
+//get an instance of the router
+var adminRouter = express.Router();
+
+//admin main page. The dashboard(http://localhost:8989/admin)
+adminRouter.get('/', function(request, response) {
+    response.send('I am the dashboard!');
+});
+
+//users page (http://localhost:8989/admin/users)
+adminRouter.get('/users', function(request, response) {
+  response.send('I show all the users!');
+});
+
+//Posts page (http://localhost:8989/admin/posts)
+adminRouter.get('/posts', function(request, response) {
+  response.send('I show all the posts');
+});
+
+//Apply the routes to our application
+app.use('/admin', adminRouter);
+
 //start the server
 app.listen(8989);
 console.log('127.0.0.1:8989 is the magic port');
